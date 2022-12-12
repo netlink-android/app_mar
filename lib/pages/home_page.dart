@@ -21,15 +21,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String selectedCategory = 'Foods';
-  int selectedPage = 0;
   List<CategoryModel> dataCategory = [];
   List<ProductModel> dataProduct = [];
-  List<IconData> icons = [
-    Icons.home_filled,
-    Icons.favorite_border_rounded,
-    Icons.chat_outlined,
-    Icons.person_outline_rounded
-  ];
 
   Future<void> getCategory() async {
     final String response =
@@ -60,12 +53,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    getCategory();
-    getProduct();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   getCategory();
+  //   getProduct();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -329,42 +322,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
-        child: BottomNavigationBar(
-            backgroundColor: white,
-            selectedItemColor: deepPurple,
-            unselectedItemColor: grey,
-            elevation: 1,
-            type: BottomNavigationBarType.fixed,
-            onTap: (value) {
-              setState(() {
-                selectedPage = value;
-              });
-            },
-            items: List.generate(
-                icons.length,
-                (index) => BottomNavigationBarItem(
-                    icon: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Icon(
-                          icons[index],
-                          color: selectedPage == index ? deepPurple : grey,
-                        ),
-                        const SizedBox(height: 5),
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 500),
-                          width: selectedPage == index ? 15 : 0,
-                          height: selectedPage == index ? 3 : 0,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: deepPurple),
-                        )
-                      ],
-                    ),
-                    label: ''))),
-      ),
+      
     );
   }
 }
