@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pet_shop_app/pages/home_page.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -7,6 +9,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _isShowpass = true;
+  TextEditingController _textEmail = new TextEditingController();
+  TextEditingController _textPass = new TextEditingController();
+  var _textEmailErr = 'Tài khoản không hợp lệ';
+  var _textPassErr = 'Mật khẩu không hợp lệ';
+  bool _emailValid = false;
+  bool _passValid = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -60,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 40,
+                        height: 30,
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -81,37 +91,60 @@ class _LoginPageState extends State<LoginPage> {
                                       bottom: BorderSide(
                                           color: Colors.grey.shade200))),
                               child: TextField(
+                                controller: _textEmail,
                                 decoration: InputDecoration(
-                                    hintText: 'Email',
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    labelStyle: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                    errorText: _emailValid ? _textEmailErr : '',
+                                    labelText: 'EMAIL',
                                     border: InputBorder.none),
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.all(8),
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.only(right: 10),
                               decoration: BoxDecoration(
                                   border: Border(
                                       bottom: BorderSide(
                                           color: Colors.grey.shade200))),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    hintText: 'Passwords',
-                                    hintStyle: TextStyle(color: Colors.grey),
-                                    border: InputBorder.none),
+                              child: Stack(
+                                alignment: AlignmentDirectional.centerEnd,
+                                children: [
+                                  TextField(
+                                    obscureText: _isShowpass,
+                                    controller: _textPass,
+                                    decoration: InputDecoration(
+                                        labelStyle: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                        errorText:
+                                            _passValid ? _textPassErr : '',
+                                        labelText: 'PASSWORD',
+                                        border: InputBorder.none),
+                                  ),
+                                  GestureDetector(
+                                    onTap: showPass,
+                                    child: _isShowpass
+                                        ? Icon(
+                                            Icons.no_encryption_gmailerrorred)
+                                        : Icon(Icons.enhanced_encryption),
+                                  )
+                                ],
                               ),
                             ),
                           ],
                         ),
                       ),
                       SizedBox(
-                        height: 50,
+                        height: 40,
                       ),
                       Text(
                         'Fogot passwords',
                         style: TextStyle(color: Colors.grey, fontSize: 14),
                       ),
                       SizedBox(
-                        height: 50,
+                        height: 40,
                       ),
                       Container(
                         height: 50,
@@ -120,37 +153,55 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(60),
                             color: Colors.orange.shade500),
                         child: Center(
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold),
+                          child: GestureDetector(
+                            onTap: loginClick,
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: 80,
+                        height: 30,
                       ),
                       Text(
                         'or logins',
                         style: TextStyle(
                           fontSize: 14,
-                            color: Colors.grey,),
+                          color: Colors.grey,
+                        ),
                       ),
-                      SizedBox(height: 30,),
+                      SizedBox(
+                        height: 30,
+                      ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(height: 50,
-                          width: 50,
-                          child: Image.asset('assets/category/facebook.png',),),
-                          Container(height: 50,
-                          width: 50,
-                          child: Image.asset('assets/category/google.png'),)
-                          
-                          
+                          Container(
+                            height: 50,
+                            width: 50,
+                            child: GestureDetector(
+                              onTap: () {
+                                print('facbool');
+                              },
+                              child: Image.asset(
+                                'assets/category/facebook.png',
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 50,
+                            width: 50,
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Image.asset('assets/category/google.png'),
+                            ),
+                          )
                         ],
                       )
                     ],
@@ -162,5 +213,35 @@ class _LoginPageState extends State<LoginPage> {
         ),
       )),
     );
+  }
+
+  void showPass() {
+    setState(() {
+      _isShowpass = !_isShowpass;
+    });
+  }
+
+  void loginClick() {
+    setState(() {
+      //   if(_emailValid && _passValid){
+      //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //   content: Text("Nhập tt tk, mk"),
+      // ));
+      //   }
+      if (_textEmail.text.length < 6 || !_textEmail.text.contains('@')) {
+        _emailValid = true;
+      } else {
+        _emailValid = false;
+      }
+      if (_textPass.text.length < 6) {
+        _passValid = true;
+      } else {
+        _passValid = false;
+      }
+      if (!_emailValid && !_passValid) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      }
+    });
   }
 }
