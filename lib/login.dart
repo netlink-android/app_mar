@@ -17,201 +17,211 @@ class _LoginPageState extends State<LoginPage> {
   bool _emailValid = false;
   bool _passValid = false;
   @override
+  void initState() {
+    _emailValid = false;
+    _passValid = false;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          Colors.orange.shade900,
-          Colors.orange.shade800,
-          Colors.orange.shade400
-        ])),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Login',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 60,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Welcome Shop Cat!',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(60),
-                        topRight: Radius.circular(60))),
-                child: Padding(
-                  padding: EdgeInsets.all(20),
+            width: double.infinity,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+              Colors.orange.shade900,
+              Colors.orange.shade800,
+              Colors.orange.shade400
+            ])),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
+                      Text(
+                        'Login',
+                        style: TextStyle(
                             color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color.fromARGB(66, 88, 22, 0),
-                                  blurRadius: 20,
-                                  offset: Offset(0, 10)),
-                            ],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200))),
-                              child: TextField(
-                                controller: _textEmail,
-                                decoration: InputDecoration(
-                                    labelStyle: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                    errorText: _emailValid ? _textEmailErr : '',
-                                    labelText: 'EMAIL',
-                                    border: InputBorder.none),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              margin: EdgeInsets.only(right: 10),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade200))),
-                              child: Stack(
-                                alignment: AlignmentDirectional.centerEnd,
-                                children: [
-                                  TextField(
-                                    obscureText: _isShowpass,
-                                    controller: _textPass,
+                            fontSize: 60,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Welcome Shop Cat!',
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(60),
+                            topRight: Radius.circular(60))),
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color.fromARGB(66, 88, 22, 0),
+                                      blurRadius: 20,
+                                      offset: Offset(0, 10)),
+                                ],
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: Colors.grey.shade200))),
+                                  child: TextField(
+                                    controller: _textEmail,
                                     decoration: InputDecoration(
                                         labelStyle: TextStyle(
                                           color: Colors.black,
                                         ),
                                         errorText:
-                                            _passValid ? _textPassErr : '',
-                                        labelText: 'PASSWORD',
+                                            _emailValid ? _textEmailErr : '',
+                                        labelText: 'EMAIL',
                                         border: InputBorder.none),
                                   ),
-                                  GestureDetector(
-                                    onTap: showPass,
-                                    child: _isShowpass
-                                        ? Icon(
-                                            Icons.no_encryption_gmailerrorred)
-                                        : Icon(Icons.enhanced_encryption),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Text(
-                        'Fogot passwords',
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Container(
-                        height: 50,
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(60),
-                            color: Colors.orange.shade500),
-                        child: Center(
-                          child: GestureDetector(
-                            onTap: loginClick,
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  margin: EdgeInsets.only(right: 10),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: Colors.grey.shade200))),
+                                  child: Stack(
+                                    alignment: AlignmentDirectional.centerEnd,
+                                    children: [
+                                      TextField(
+                                        obscureText: _isShowpass,
+                                        controller: _textPass,
+                                        decoration: InputDecoration(
+                                            labelStyle: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                            errorText:
+                                                _passValid ? _textPassErr : '',
+                                            labelText: 'PASSWORD',
+                                            border: InputBorder.none),
+                                      ),
+                                      GestureDetector(
+                                        onTap: showPass,
+                                        child: _isShowpass
+                                            ? Icon(Icons
+                                                .no_encryption_gmailerrorred)
+                                            : Icon(Icons.enhanced_encryption),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        'or logins',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 50,
-                            child: GestureDetector(
-                              onTap: () {
-                                print('facbool');
-                              },
-                              child: Image.asset(
-                                'assets/category/facebook.png',
-                              ),
-                            ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Text(
+                            'Fogot passwords',
+                            style: TextStyle(color: Colors.grey, fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 40,
                           ),
                           Container(
                             height: 50,
-                            width: 50,
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: Image.asset('assets/category/google.png'),
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(60),
+                                color: Colors.orange.shade500),
+                            child: Center(
+                              child: GestureDetector(
+                                onTap: loginClick,
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            'or logins',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    print('facbool');
+                                  },
+                                  child: Image.asset(
+                                    'assets/category/facebook.png',
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 50,
+                                width: 50,
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child:
+                                      Image.asset('assets/category/google.png'),
+                                ),
+                              )
+                            ],
                           )
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            )
-          ],
-        ),
-      )),
+                )
+              ],
+            ),
+          )),
     );
   }
 
