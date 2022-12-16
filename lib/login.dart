@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pet_shop_app/pages/home_page.dart';
+import 'package:pet_shop_app/testapi/modelApi/login.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -238,20 +239,21 @@ class _LoginPageState extends State<LoginPage> {
       //   content: Text("Nhập tt tk, mk"),
       // ));
       //   }
-      if (_textEmail.text.length < 6 || !_textEmail.text.contains('@')) {
+      if (_textEmail.text.length < 6
+          // || !_textEmail.text.contains('@')
+          ) {
         _emailValid = true;
       } else {
         _emailValid = false;
       }
-      if (_textPass.text.length < 6) {
+      if (_textPass.text.length < 3) {
         _passValid = true;
       } else {
         _passValid = false;
       }
-      if (!_emailValid && !_passValid) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
-      }
+      if (!_emailValid && !_passValid) {}
     });
   }
 }
+
+

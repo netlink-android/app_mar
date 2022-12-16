@@ -4,6 +4,8 @@ import 'package:pet_shop_app/pages/home_page.dart';
 import 'package:pet_shop_app/pages/mainpage.dart';
 import 'package:pet_shop_app/provider/cart_provider.dart';
 import 'package:pet_shop_app/splash.dart';
+import 'package:pet_shop_app/testapi/datauser.dart';
+
 import 'package:provider/provider.dart';
 
 void main() {
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: const SplashPage(),
+        home: const UserScrenn(),
         // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
     );
