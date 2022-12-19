@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:pet_shop_app/pages/home_page.dart';
+import 'package:pet_shop_app/testapi/datauser.dart';
+import 'package:pet_shop_app/testapi/global.dart';
 import 'package:pet_shop_app/testapi/modelApi/login.dart';
 import 'package:http/http.dart' as http;
+import 'package:pet_shop_app/testapi/modelApi/message.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -17,10 +23,13 @@ class _LoginPageState extends State<LoginPage> {
   var _textPassErr = 'Mật khẩu không hợp lệ';
   bool _emailValid = false;
   bool _passValid = false;
+  bool checkLogin = false;
+  late Login login;
   @override
   void initState() {
     _emailValid = false;
     _passValid = false;
+    checkLogin = false;
     super.initState();
   }
 
@@ -251,9 +260,33 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         _passValid = false;
       }
-      if (!_emailValid && !_passValid) {}
+      if (!_emailValid && !_passValid) {
+        loginUser(_textEmail.text, _textPass.text);
+      }
     });
   }
+
+  void loginUser(String username, String password) async {
+    final bodyCode = '{"username": "$username", "password": "$password"}';
+    http.Response reponse = await http.post(Uri.parse(URL_NAME + '/login'),
+        body: jsonDecode(bodyCode));
+    if (reponse.statusCode == 200) {
+      var mapReponse = jsonDecode(reponse.body);
+      Msg mapMsg = Msg.fromJson(mapReponse['msg']);
+      // Msg msg = mapReponse.map((user) => Msg.fromJson(user));
+      if (mapMsg.message == ('Dang nhap thanh cong')) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Sai ten tk or mk"),
+        ));
+      }
+      // return Login.fromJsonMsg(mapReponse);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Loi server"),
+      ));
+    }
+  }
 }
-
-
